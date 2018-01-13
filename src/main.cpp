@@ -360,8 +360,11 @@ int main() {
 				double y_ref = y_point;
 
 				// Need to trasnform back to world coordinate system
-				x_point = x_ref + (x_ref * cos(ref_yaw)) - (y_ref * sin(ref_yaw));
-				y_point = y_ref + (x_ref * sin(ref_yaw)) + (y_ref * cos(ref_yaw));
+				x_point =(x_ref * cos(ref_yaw)) - (y_ref * sin(ref_yaw));
+				y_point =(x_ref * sin(ref_yaw)) + (y_ref * cos(ref_yaw));
+
+				x_point += ref_x;
+				y_point += ref_y;
 
 				next_x_vals.push_back(x_point);
 				next_y_vals.push_back(y_point);
@@ -373,13 +376,6 @@ int main() {
 			{
 				std::cout << "next x: " << next_x_vals[i] << std::endl;
 				std::cout << "next y: " << next_y_vals[i] << std::endl;
-			}
-
-			double dist_inc = 0.5;
-			for (int i = 0; i < 50; i++)
-			{
-				next_x_vals.push_back(car_x + (dist_inc*i)*cos(deg2rad(car_yaw)));
-				next_y_vals.push_back(car_y + (dist_inc*i)*sin(deg2rad(car_yaw)));
 			}
 
           	msgJson["next_x"] = next_x_vals;
