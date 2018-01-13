@@ -267,7 +267,7 @@ int main() {
 			double ref_x	= car_x;
 			double ref_y	= car_y;
 			double ref_yaw	= deg2rad(car_yaw);
-
+/*
 			// If previous size is nearly empty, use the current car as starting references
 			if (prev_size < 2)
 			{
@@ -372,6 +372,14 @@ int main() {
 				std::cout << "next x: " << next_x_vals[i] << std::endl;
 				std::cout << "next y: " << next_y_vals[i] << std::endl;
 			}
+			*/
+			double dist_inc = 0.5;
+			for (int i = 0; i < 50; i++)
+			{
+				next_x_vals.push_back(car_x + (dist_inc*i)*cos(deg2rad(car_yaw)));
+				next_y_vals.push_back(car_y + (dist_inc*i)*sin(deg2rad(car_yaw)));
+			}
+
           	msgJson["next_x"] = next_x_vals;
           	msgJson["next_y"] = next_y_vals;
 
