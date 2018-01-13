@@ -302,8 +302,6 @@ int main() {
 			}
 
 			// In Frenet add evenly 30m spaced points ahead of the starting reference
-			std::cout << "car_s " << (car_s + spline_future_pts) << std::endl;
-			std::cout << "car_d " << (center_next_lane * lane) << std::endl;
 			vector<double> next_wp0 = getXY(car_s + spline_future_pts, center_next_lane * lane, map_waypoints_s, map_waypoints_x, map_waypoints_y);
 			vector<double> next_wp1 = getXY(car_s + (spline_future_pts*2), center_next_lane * lane, map_waypoints_s, map_waypoints_x, map_waypoints_y);
 			vector<double> next_wp2 = getXY(car_s + (spline_future_pts*3), center_next_lane * lane, map_waypoints_s, map_waypoints_x, map_waypoints_y);
@@ -316,7 +314,6 @@ int main() {
 			pts_y.push_back(next_wp1[1]);
 			pts_y.push_back(next_wp2[1]);
 
-			std::cout << "ptsx size "<< pts_x.size() << std::endl;
 			for (int i = 0; i < pts_x.size(); i++)
 			{
 				//shift car reference angle to 0 degress (car coordinate system)
@@ -332,7 +329,6 @@ int main() {
 			sp.set_points(pts_x, pts_y);
 
 			// Loop through previous remaining points and to the next points
-			std::cout << "previous ptsx size " << previous_path_x.size() << std::endl;
 			for (int i = 0; i < previous_path_x.size(); i++)
 			{
 				next_x_vals.push_back(previous_path_x[i]);
@@ -368,14 +364,6 @@ int main() {
 
 				next_x_vals.push_back(x_point);
 				next_y_vals.push_back(y_point);
-			}
-
-          	// TODO: define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
-			std::cout << "next ptsx size " << next_x_vals.size() << std::endl;
-			for (int i = 0; i < next_x_vals.size(); i++)
-			{
-				std::cout << "next x: " << next_x_vals[i] << std::endl;
-				std::cout << "next y: " << next_y_vals[i] << std::endl;
 			}
 
           	msgJson["next_x"] = next_x_vals;
