@@ -267,7 +267,6 @@ int main() {
 			double ref_x	= car_x;
 			double ref_y	= car_y;
 			double ref_yaw	= deg2rad(car_yaw);
-			std::cout << "test " << std::endl;
 
 			// If previous size is nearly empty, use the current car as starting references
 			if (prev_size < 2)
@@ -282,8 +281,6 @@ int main() {
 
 				pts_y.push_back(prev_car_y);
 				pts_y.push_back(car_y);
-				std::cout << "Points added " << std::endl;
-
 			}
 			// Else calculate new set of waypoints using previous car points as starting point
 			else
@@ -317,6 +314,7 @@ int main() {
 			pts_y.push_back(next_wp1[1]);
 			pts_y.push_back(next_wp2[1]);
 
+			std::cout << "ptsx size "<< pts_x.size() << std::endl;
 			for (int i = 0; i < pts_x.size(); i++)
 			{
 				//shift car reference angle to 0 degress (car coordinate system)
@@ -332,6 +330,7 @@ int main() {
 			sp.set_points(pts_x, pts_y);
 
 			// Loop through previous remaining points and to the next points
+			std::cout << "previous ptsx size " << previous_path_x.size() << std::endl;
 			for (int i = 0; i < previous_path_x.size(); i++)
 			{
 				next_x_vals.push_back(previous_path_x[i]);
@@ -367,6 +366,7 @@ int main() {
 			}
 
           	// TODO: define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
+			std::cout << "next ptsx size " << next_x_vals.size() << std::endl;
           	msgJson["next_x"] = next_x_vals;
           	msgJson["next_y"] = next_y_vals;
 
