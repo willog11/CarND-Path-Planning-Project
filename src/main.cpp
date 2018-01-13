@@ -367,6 +367,11 @@ int main() {
 
           	// TODO: define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
 			std::cout << "next ptsx size " << next_x_vals.size() << std::endl;
+			for (int i = 0; i < next_x_vals.size(); i++)
+			{
+				std::cout << "next x: " << next_x_vals[i] << std::endl;
+				std::cout << "next y: " << next_y_vals[i] << std::endl;
+			}
           	msgJson["next_x"] = next_x_vals;
           	msgJson["next_y"] = next_y_vals;
 
