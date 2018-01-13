@@ -267,7 +267,7 @@ int main() {
 			double ref_x	= car_x;
 			double ref_y	= car_y;
 			double ref_yaw	= deg2rad(car_yaw);
-/*
+
 			// If previous size is nearly empty, use the current car as starting references
 			if (prev_size < 2)
 			{
@@ -290,7 +290,7 @@ int main() {
 				ref_y = previous_path_y[prev_size - 1];
 
 				double ref_x_prev = previous_path_x[prev_size - 2];
-				double ref_y_prev = previous_path_x[prev_size - 2];
+				double ref_y_prev = previous_path_y[prev_size - 2];
 				ref_yaw = atan2((ref_y - ref_y_prev), (ref_x - ref_x_prev));
 
 				// Add the previous and current points to the waypoint
