@@ -267,6 +267,7 @@ int main() {
 			double ref_x	= car_x;
 			double ref_y	= car_y;
 			double ref_yaw	= deg2rad(car_yaw);
+			std::cout << "test " << std::endl;
 
 			// If previous size is nearly empty, use the current car as starting references
 			if (prev_size < 2)
@@ -281,6 +282,8 @@ int main() {
 
 				pts_y.push_back(prev_car_y);
 				pts_y.push_back(car_y);
+				std::cout << "Points added " << std::endl;
+
 			}
 			// Else calculate new set of waypoints using previous car points as starting point
 			else
