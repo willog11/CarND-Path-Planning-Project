@@ -372,7 +372,7 @@ int main() {
 				std::cout << "next x: " << next_x_vals[i] << std::endl;
 				std::cout << "next y: " << next_y_vals[i] << std::endl;
 			}
-			*/
+
 			double dist_inc = 0.5;
 			for (int i = 0; i < 50; i++)
 			{
