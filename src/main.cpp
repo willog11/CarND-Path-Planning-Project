@@ -303,7 +303,7 @@ int main() {
 
 			// In Frenet add evenly 30m spaced points ahead of the starting reference
 			std::cout << "car_s " << (car_s + spline_future_pts) << std::endl;
-			std::cout << "car_d " << (center_next_lane * lane, ) << std::endl;
+			std::cout << "car_d " << (center_next_lane * lane) << std::endl;
 			vector<double> next_wp0 = getXY(car_s + spline_future_pts, center_next_lane * lane, map_waypoints_s, map_waypoints_x, map_waypoints_y);
 			vector<double> next_wp1 = getXY(car_s + (spline_future_pts*2), center_next_lane * lane, map_waypoints_s, map_waypoints_x, map_waypoints_y);
 			vector<double> next_wp2 = getXY(car_s + (spline_future_pts*3), center_next_lane * lane, map_waypoints_s, map_waypoints_x, map_waypoints_y);
