@@ -255,6 +255,7 @@ int main() {
 
           	json msgJson;
 
+			// Define the actual (x,y) points we will use for the planner
           	vector<double> next_x_vals;
           	vector<double> next_y_vals;
 
@@ -326,10 +327,6 @@ int main() {
 			// Create a spline object and set the points
 			tk::spline sp;
 			sp.set_points(pts_x, pts_y);
-
-			// Define the actual (x,y) points we will use for the planner
-			vector<double> next_x_vals;
-			vector<double> next_y_vals;
 
 			// Loop through previous remaining points and to the next points
 			for (int i = 0; i < previous_path_x.size(); i++)
