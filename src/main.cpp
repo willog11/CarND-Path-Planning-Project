@@ -276,7 +276,7 @@ int main() {
 					// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)
 					check_car_s += (double)prev_size * 0.02 * check_speed;
 					
-					if ((check_car_s - car_s) < 30)
+					if ((check_car_s > car_s) && (check_car_s - car_s) < 30)
 					{
 						too_close = true;
 					}
@@ -287,7 +287,7 @@ int main() {
 			{
 				ref_vel -= 0.224;
 			}
-			else if ((ref_vel) < 49.5)
+			else if (ref_vel < 49.5)
 			{
 				ref_vel += 0.224;
 			}
