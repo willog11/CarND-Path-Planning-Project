@@ -205,7 +205,7 @@ int main() {
   int lane = 1;
 
   // Reference speed(mph) to never exceed
-  const double ref_vel = 49.5;
+  double ref_vel = 0.0;
 
   // Width of lane(m), distance from edge of lane to center of next(m)
   const int lane_width = 4;
@@ -250,10 +250,48 @@ int main() {
 
           	// Sensor Fusion Data, a list of all other cars on the same side of the road.
           	auto sensor_fusion = j[1]["sensor_fusion"];
+			json msgJson;
 
 			int prev_size = previous_path_x.size();
 
-          	json msgJson;
+			if (prev_size > 0)
+			{
+				car_s = end_path_s;
+			}
+
+			bool too_close = false;
+
+			// Loop through all cars found by sensor fusion
+			for (int i = 0;i < sensor_fusion.size(); i++)
+			{
+				// Only look at cars in the ego vehicles lane
+				double d = sensor_fusion[i][6];
+				if (d<center_next_lane + 2 && d> center_next_lane - 2)
+				{
+					double vx = sensor_fusion[i][3];
+					double vy = sensor_fusion[i][4];
+					double check_speed = sqrt(vx*vx + vy*vy);
+					double check_car_s = sensor_fusion[i][5];
+
+					// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)
+					check_car_s += (double)prev_size * 0.02 * check_speed;
+					
+					if ((check_car_s - car_s) < 30)
+					{
+						too_close = true;
+					}
+				}
+			}
+
+			if (too_close)
+			{
+				ref_vel -= 0.224;
+			}
+			else if ((ref_vel) < 49.5)
+			{
+				ref_vel += 0.224;
+			}
+
 
 			// Define the actual (x,y) points we will use for the planner
           	vector<double> next_x_vals;
