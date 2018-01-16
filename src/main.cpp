@@ -313,7 +313,7 @@ int main() {
 
 				cout << "[Other Veh] S position: " << veh_s << endl;
 
-				Vehicle other_veh(d, veh_s*2.237, veh_speed, 0);
+				Vehicle other_veh(d, veh_s, veh_speed *2.237, 0);
 				//cars.push_back(other_veh);
 
 				vector<Vehicle> pred = other_veh.generate_predictions(50);
