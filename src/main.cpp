@@ -298,6 +298,8 @@ int main() {
 				//cars.push_back(other_veh);
 
 				vector<Vehicle> pred = other_veh.generate_predictions();
+				cout << "[Other Veh] Predicted S position: " << pred[0].s << endl;
+				cout << "[Other Veh] Predicted d position: " << pred[0].lane << endl;
 				predictions[v_id + 1] = pred;
 				
 
@@ -322,6 +324,8 @@ int main() {
 				}*/
 			}
 			vector<Vehicle> trajectory = my_veh.choose_next_state(predictions);
+			cout << "[Ego Veh] Next s position: " << trajectory[0].s << endl;
+			cout << "[Ego Veh] Next d position: " << trajectory[0].lane << endl;
 			my_veh.realize_next_state(trajectory);
 
 			ref_vel = my_veh.v;
