@@ -9,6 +9,7 @@
 #include "Eigen-3.3/Eigen/QR"
 #include "json.hpp"
 #include "spline.h"
+#include "vehicle.h"
 
 using namespace std;
 
@@ -214,7 +215,7 @@ int main() {
   // Incremental distance for spline points ahead of starting reference
   const int spline_future_pts = 30;
 
-  h.onMessage([&map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy, &lane, &ref_vel, &center_next_lane, &spline_future_pts](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
+    h.onMessage([&map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy, &lane, &ref_vel, &center_next_lane, &spline_future_pts](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
@@ -260,37 +261,78 @@ int main() {
 			}
 
 			bool too_close = false;
+			//vector<Vehicle> cars;
 
+			Vehicle my_veh(lane, car_s, car_speed, 0);
+			vector<float> road_data;
+			road_data.push_back(59.5);
+			road_data.push_back(3);
+			road_data.push_back(30);
+			road_data.push_back(0);
+			road_data.push_back(0.224);
+			my_veh.configure(road_data);
+
+			map<int, vector<Vehicle>> predictions;
+			vector<Vehicle> my_pred = my_veh.generate_predictions();
+			predictions[0] = my_pred;
 			// Loop through all cars found by sensor fusion
 			for (int i = 0;i < sensor_fusion.size(); i++)
 			{
 				// Only look at cars in the ego vehicles lane
 				double d = sensor_fusion[i][6];
-				if (d<center_next_lane + 2 && d> center_next_lane - 2)
+				double vx = sensor_fusion[i][3];
+				double vy = sensor_fusion[i][4];
+				double veh_speed = sqrt(vx*vx + vy*vy);
+				double veh_s = sensor_fusion[i][5];
+				int d = sensor_fusion[i][6] / 4;
+				int v_id = sensor_fusion[i][0];
+
+				// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)
+				veh_s += (double)prev_size * 0.02 * veh_speed;
+
+				Vehicle other_veh(d, veh_s, veh_speed, 0);
+				//cars.push_back(other_veh);
+
+				vector<Vehicle> pred = other_veh.generate_predictions();
+				predictions[v_id + 1] = pred;
+				
+
+
+				/*if (d<center_next_lane + 2 && d> center_next_lane - 2)
 				{
 					double vx = sensor_fusion[i][3];
 					double vy = sensor_fusion[i][4];
 					double check_speed = sqrt(vx*vx + vy*vy);
 					double check_car_s = sensor_fusion[i][5];
+					int d = sensor_fusion[i][6] / 4;
 
 					// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)
 					check_car_s += (double)prev_size * 0.02 * check_speed;
 					
+					
+					// Check if the vehice is in front and is closer than 30m
 					if ((check_car_s > car_s) && (check_car_s - car_s) < 30)
 					{
 						too_close = true;
 					}
-				}
+				}*/
 			}
+			vector<Vehicle> trajectory = my_veh.choose_next_state(predictions);
+			my_veh.realize_next_state(trajectory);
 
-			if (too_close)
+			ref_vel = my_veh.v;
+			lane	= my_veh.lane;
+
+
+
+			/*if (too_close)
 			{
 				ref_vel -= 0.224;
 			}
 			else if (ref_vel < 49.5)
 			{
 				ref_vel += 0.224;
-			}
+			}*/
 
 
 			// Define the actual (x,y) points we will use for the planner
