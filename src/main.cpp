@@ -289,7 +289,7 @@ int main() {
 			cout << "[Ego Veh] Current s position: " << car_s << endl;
 			cout << "[Ego Veh] Current d position: " << lane << endl;
 			
-
+			map<int, Vehicle> vehicles;
 			map<int, vector<Vehicle>> predictions;
 			// Loop through all cars found by sensor fusion
 			for (int i = 0;i < sensor_fusion.size(); i++)
@@ -314,12 +314,7 @@ int main() {
 				if (veh_lane >= 0)
 				{
 					Vehicle other_veh(veh_lane, veh_s, veh_speed *2.237, 0);
-					//cars.push_back(other_veh);
-
-					vector<Vehicle> pred = other_veh.generate_predictions(50);
-					//cout << "[Other Veh] Predicted S position: " << pred[0].s << endl;
-					//cout << "[Other Veh] Predicted d position: " << pred[0].lane << endl;
-					predictions[v_id] = pred;
+					vehicles.insert(std::pair<int, Vehicle>(v_id, other_veh));
 				}
 				
 
@@ -343,6 +338,15 @@ int main() {
 					}
 				}*/
 			}
+
+			map<int, Vehicle>::iterator it = vehicles.begin();
+			while (it != vehicles.end()) {
+				int v_id = it->first;
+				vector<Vehicle> preds = it->second.generate_predictions(50);
+				predictions[v_id] = preds;
+				it++;
+			}
+
 			vector<Vehicle> trajectory = my_veh.choose_next_state(predictions);
 			cout << "[Ego Veh] Next trajectory size: " << trajectory.size() << endl;
 			cout << "[Ego Veh] Next s position: " << trajectory[0].s << endl;
