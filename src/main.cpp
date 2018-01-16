@@ -279,12 +279,12 @@ int main() {
 			for (int i = 0;i < sensor_fusion.size(); i++)
 			{
 				// Only look at cars in the ego vehicles lane
-				double d = sensor_fusion[i][6];
+				//double d = sensor_fusion[i][6];
 				double vx = sensor_fusion[i][3];
 				double vy = sensor_fusion[i][4];
 				double veh_speed = sqrt(vx*vx + vy*vy);
 				double veh_s = sensor_fusion[i][5];
-				int d = sensor_fusion[i][6] / 4;
+				int d = (int) sensor_fusion[i][6] / 4;
 				int v_id = sensor_fusion[i][0];
 
 				// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)

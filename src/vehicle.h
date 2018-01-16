@@ -71,7 +71,7 @@ public:
 
   vector<Vehicle> prep_lane_change_trajectory(string state, map<int, vector<Vehicle>> predictions);
 
-  void Vehicle::configure(vector<float> road_data);
+  void configure(vector<float> road_data);
 
   float position_at(int t);
 
