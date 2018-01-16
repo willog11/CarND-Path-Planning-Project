@@ -291,8 +291,6 @@ int main() {
 			
 
 			map<int, vector<Vehicle>> predictions;
-			vector<Vehicle> my_pred = my_veh.generate_predictions();
-			predictions[0] = my_pred;
 			// Loop through all cars found by sensor fusion
 			for (int i = 0;i < sensor_fusion.size(); i++)
 			{
