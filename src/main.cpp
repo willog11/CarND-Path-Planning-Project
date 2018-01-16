@@ -215,7 +215,17 @@ int main() {
   // Incremental distance for spline points ahead of starting reference
   const int spline_future_pts = 30;
 
-    h.onMessage([&map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy, &lane, &ref_vel, &center_next_lane, &spline_future_pts](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
+  Vehicle my_veh(1, 0, 0, 0);
+  vector<float> road_data;
+  road_data.push_back(49);
+  road_data.push_back(3);
+  road_data.push_back(30);
+  road_data.push_back(0);
+  road_data.push_back(7);
+  my_veh.configure(road_data);
+  my_veh.state = "KL";
+
+    h.onMessage([&map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy, &lane, &ref_vel, &center_next_lane, &spline_future_pts, &my_veh](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
@@ -255,23 +265,30 @@ int main() {
 
 			int prev_size = previous_path_x.size();
 
+			// reference state
+			double ref_x = car_x;
+			double ref_y = car_y;
+			double ref_yaw = deg2rad(car_yaw);
+
 			if (prev_size > 0)
 			{
+				ref_x = previous_path_x[prev_size - 1];
+				double ref_x_prev = previous_path_x[prev_size - 2];
+				ref_y = previous_path_y[prev_size - 1];
+				double ref_y_prev = previous_path_y[prev_size - 2];
+				ref_yaw = atan2(ref_y - ref_y_prev, ref_x - ref_x_prev);
 				car_s = end_path_s;
+				car_speed = distance(ref_x_prev, ref_y_prev, ref_x, ref_y) / 0.02*2.237;
 			}
 
-			bool too_close = false;
+			my_veh.s = car_s;
+			my_veh.v = car_speed;
+
+			//bool too_close = false;
 			//vector<Vehicle> cars;
 			cout << "[Ego Veh] Current s position: " << car_s << endl;
 			cout << "[Ego Veh] Current d position: " << lane << endl;
-			Vehicle my_veh(lane, car_s, car_speed, 7);
-			vector<float> road_data;
-			road_data.push_back(59.5);
-			road_data.push_back(3);
-			road_data.push_back(30);
-			road_data.push_back(0);
-			road_data.push_back(7);
-			my_veh.configure(road_data);
+			
 
 			map<int, vector<Vehicle>> predictions;
 			vector<Vehicle> my_pred = my_veh.generate_predictions();
@@ -289,19 +306,20 @@ int main() {
 				int v_id = sensor_fusion[i][0];
 
 				cout << "[Other Veh] lane: " << d << endl;
+				cout << "[Other Veh] speed: " << veh_speed << endl;
 
 				// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)
 				veh_s += (double)prev_size * 0.02 * veh_speed;
 
 				cout << "[Other Veh] S position: " << veh_s << endl;
 
-				Vehicle other_veh(d, veh_s, veh_speed, 0);
+				Vehicle other_veh(d, veh_s*2.237, veh_speed, 0);
 				//cars.push_back(other_veh);
 
-				vector<Vehicle> pred = other_veh.generate_predictions();
+				vector<Vehicle> pred = other_veh.generate_predictions(50);
 				cout << "[Other Veh] Predicted S position: " << pred[0].s << endl;
 				cout << "[Other Veh] Predicted d position: " << pred[0].lane << endl;
-				predictions[v_id + 1] = pred;
+				predictions[v_id] = pred;
 				
 
 
@@ -354,11 +372,6 @@ int main() {
 			// List of waypoints
 			vector<double> pts_x;
 			vector<double> pts_y;
-
-			// Reference car points
-			double ref_x	= car_x;
-			double ref_y	= car_y;
-			double ref_yaw	= deg2rad(car_yaw);
 
 			// If previous size is nearly empty, use the current car as starting references
 			if (prev_size < 2)
