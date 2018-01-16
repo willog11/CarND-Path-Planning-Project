@@ -302,24 +302,27 @@ int main() {
 				double vy = sensor_fusion[i][4];
 				double veh_speed = sqrt(vx*vx + vy*vy);
 				double veh_s = sensor_fusion[i][5];
-				int d = (int) sensor_fusion[i][6] / 4;
+				int veh_lane = (int) sensor_fusion[i][6] / 4;
 				int v_id = sensor_fusion[i][0];
 
-				cout << "[Other Veh] lane: " << d << endl;
-				cout << "[Other Veh] speed: " << veh_speed << endl;
+				//cout << "[Other Veh] lane: " << d << endl;
+				//cout << "[Other Veh] speed: " << veh_speed << endl;
 
 				// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)
 				veh_s += (double)prev_size * 0.02 * veh_speed;
 
-				cout << "[Other Veh] S position: " << veh_s << endl;
+				//cout << "[Other Veh] S position: " << veh_s << endl;
 
-				Vehicle other_veh(d, veh_s, veh_speed *2.237, 0);
-				//cars.push_back(other_veh);
+				if (veh_lane >= 0)
+				{
+					Vehicle other_veh(veh_lane, veh_s, veh_speed *2.237, 0);
+					//cars.push_back(other_veh);
 
-				vector<Vehicle> pred = other_veh.generate_predictions(50);
-				cout << "[Other Veh] Predicted S position: " << pred[0].s << endl;
-				cout << "[Other Veh] Predicted d position: " << pred[0].lane << endl;
-				predictions[v_id] = pred;
+					vector<Vehicle> pred = other_veh.generate_predictions(50);
+					//cout << "[Other Veh] Predicted S position: " << pred[0].s << endl;
+					//cout << "[Other Veh] Predicted d position: " << pred[0].lane << endl;
+					predictions[v_id] = pred;
+				}
 				
 
 
@@ -343,8 +346,10 @@ int main() {
 				}*/
 			}
 			vector<Vehicle> trajectory = my_veh.choose_next_state(predictions);
+			cout << "[Ego Veh] Next trajectory size: " << trajectory.size() << endl;
 			cout << "[Ego Veh] Next s position: " << trajectory[0].s << endl;
 			cout << "[Ego Veh] Next d position: " << trajectory[0].lane << endl;
+
 			my_veh.realize_next_state(trajectory);
 
 			ref_vel = my_veh.v;
