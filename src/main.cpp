@@ -342,15 +342,15 @@ int main() {
 			map<int, Vehicle>::iterator it = vehicles.begin();
 			while (it != vehicles.end()) {
 				int v_id = it->first;
-				vector<Vehicle> preds = it->second.generate_predictions(50);
+				vector<Vehicle> preds = it->second.generate_predictions(30);
 				predictions[v_id] = preds;
 				it++;
 			}
 
 			vector<Vehicle> trajectory = my_veh.choose_next_state(predictions);
 			cout << "[Ego Veh] Next trajectory size: " << trajectory.size() << endl;
-			cout << "[Ego Veh] Next s position: " << trajectory[0].s << endl;
-			cout << "[Ego Veh] Next d position: " << trajectory[0].lane << endl;
+			cout << "[Ego Veh] Next s position: " << trajectory[1].s << endl;
+			cout << "[Ego Veh] Next d position: " << trajectory[1].lane << endl;
 
 			my_veh.realize_next_state(trajectory);
 
