@@ -262,7 +262,8 @@ int main() {
 
 			bool too_close = false;
 			//vector<Vehicle> cars;
-
+			cout << "[Ego Veh] Current s position: " << car_s << endl;
+			cout << "[Ego Veh] Current d position: " << lane << endl;
 			Vehicle my_veh(lane, car_s, car_speed, 7);
 			vector<float> road_data;
 			road_data.push_back(59.5);
