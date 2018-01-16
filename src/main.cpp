@@ -263,13 +263,13 @@ int main() {
 			bool too_close = false;
 			//vector<Vehicle> cars;
 
-			Vehicle my_veh(lane, car_s, car_speed, 0);
+			Vehicle my_veh(lane, car_s, car_speed, 7);
 			vector<float> road_data;
 			road_data.push_back(59.5);
 			road_data.push_back(3);
 			road_data.push_back(30);
 			road_data.push_back(0);
-			road_data.push_back(0.224);
+			road_data.push_back(7);
 			my_veh.configure(road_data);
 
 			map<int, vector<Vehicle>> predictions;
@@ -287,8 +287,12 @@ int main() {
 				int d = (int) sensor_fusion[i][6] / 4;
 				int v_id = sensor_fusion[i][0];
 
+				cout << "[Other Veh] lane: " << d << endl;
+
 				// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)
 				veh_s += (double)prev_size * 0.02 * veh_speed;
+
+				cout << "[Other Veh] S position: " << veh_s << endl;
 
 				Vehicle other_veh(d, veh_s, veh_speed, 0);
 				//cars.push_back(other_veh);
@@ -322,6 +326,9 @@ int main() {
 
 			ref_vel = my_veh.v;
 			lane	= my_veh.lane;
+
+			cout << "[EGO Veh] Lane requested: " << lane << endl;
+			cout << "[EGO Veh] Velocity requested: " << ref_vel << endl;
 
 
 
