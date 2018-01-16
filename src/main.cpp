@@ -224,6 +224,7 @@ int main() {
   road_data.push_back(7);
   my_veh.configure(road_data);
   my_veh.state = "KL";
+  my_veh.goal_s = max_s;
 
     h.onMessage([&map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy, &lane, &ref_vel, &center_of_lane, &lane_width, &spline_future_pts, &my_veh](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {
@@ -342,15 +343,15 @@ int main() {
 			map<int, Vehicle>::iterator it = vehicles.begin();
 			while (it != vehicles.end()) {
 				int v_id = it->first;
-				vector<Vehicle> preds = it->second.generate_predictions(30);
+				vector<Vehicle> preds = it->second.generate_predictions(50);
 				predictions[v_id] = preds;
 				it++;
 			}
 
 			vector<Vehicle> trajectory = my_veh.choose_next_state(predictions);
 			cout << "[Ego Veh] Next trajectory size: " << trajectory.size() << endl;
-			cout << "[Ego Veh] Next s position: " << trajectory[1].s << endl;
-			cout << "[Ego Veh] Next d position: " << trajectory[1].lane << endl;
+			cout << "[Ego Veh] Next s position: " << trajectory[0].s << endl;
+			cout << "[Ego Veh] Next d position: " << trajectory[0].lane << endl;
 
 			my_veh.realize_next_state(trajectory);
 
