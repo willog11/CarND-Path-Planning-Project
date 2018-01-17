@@ -280,10 +280,11 @@ int main() {
 				ref_yaw = atan2(ref_y - ref_y_prev, ref_x - ref_x_prev);
 				car_s = end_path_s;
 				car_speed = distance(ref_x_prev, ref_y_prev, ref_x, ref_y) / 0.02;
+				cout << "[Ego Veh] from previous current speed: " << car_speed << endl;
 			}
-
+			else
+				cout << "[Ego Veh] Current speed: " << car_speed << endl;
 			my_veh.s = car_s;
-			cout << "[Ego Veh] Current speed: " << car_speed << endl;
 			my_veh.v = car_speed;
 
 			//bool too_close = false;
@@ -357,7 +358,7 @@ int main() {
 
 			my_veh.realize_next_state(trajectory);
 
-			ref_vel = my_veh.v * 2.237;
+			ref_vel = my_veh.v;
 			lane	= my_veh.lane;
 
 			cout << "[EGO Veh] Lane requested: " << lane << endl;
