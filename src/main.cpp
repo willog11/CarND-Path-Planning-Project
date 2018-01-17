@@ -280,10 +280,8 @@ int main() {
 				ref_yaw = atan2(ref_y - ref_y_prev, ref_x - ref_x_prev);
 				car_s = end_path_s;
 				car_speed = distance(ref_x_prev, ref_y_prev, ref_x, ref_y) / 0.02;
-				cout << "[Ego Veh] from previous current speed: " << car_speed << endl;
 			}
-			else
-				cout << "[Ego Veh] Current speed: " << car_speed << endl;
+
 			my_veh.s = car_s;
 			my_veh.v = car_speed;
 
@@ -305,7 +303,6 @@ int main() {
 				double veh_s = sensor_fusion[i][5];
 				int veh_lane = (int) sensor_fusion[i][6] / 4;
 				int v_id = sensor_fusion[i][0];
-				cout << "[Other Veh] Current speed: " << veh_speed << endl;
 
 				//cout << "[Other Veh] lane: " << d << endl;
 				//cout << "[Other Veh] speed: " << veh_speed << endl;
@@ -462,7 +459,7 @@ int main() {
 			for (int i = 1; i <= 50 - previous_path_x.size(); i++)
 			{
 				// target_dist = N * 0.02 * ref_vel (m\s)
-				double N = (target_dist / (0.02 * ref_vel / 2.24));
+				double N = (target_dist / (0.02 * ref_vel));
 				double x_point = x_addon + (target_x / N);
 				double y_point = sp(x_point);
 
