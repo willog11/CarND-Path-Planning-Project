@@ -287,9 +287,8 @@ int main() {
 
 			//bool too_close = false;
 			//vector<Vehicle> cars;
-			cout << "[Ego Veh] Current s position: " << car_s << endl;
-			cout << "[Ego Veh] Current d position: " << lane << endl;
-			cout << "[Ego Veh] Current state: " << my_veh.state << endl;
+			//cout << "[Ego Veh] Current s position: " << car_s << endl;
+			//cout << "[Ego Veh] Current d position: " << lane << endl;
 			
 			map<int, Vehicle> vehicles;
 			map<int, vector<Vehicle>> predictions;
@@ -350,9 +349,9 @@ int main() {
 			}
 
 			vector<Vehicle> trajectory = my_veh.choose_next_state(predictions);
-			cout << "[Ego Veh] Next trajectory size: " << trajectory.size() << endl;
-			cout << "[Ego Veh] Next s position: " << trajectory[0].s << endl;
-			cout << "[Ego Veh] Next d position: " << trajectory[0].lane << endl;
+			//cout << "[Ego Veh] Next trajectory size: " << trajectory.size() << endl;
+			//cout << "[Ego Veh] Next s position: " << trajectory[0].s << endl;
+			//cout << "[Ego Veh] Next d position: " << trajectory[0].lane << endl;
 
 			my_veh.realize_next_state(trajectory);
 
@@ -361,7 +360,7 @@ int main() {
 
 			cout << "[EGO Veh] Lane requested: " << lane << endl;
 			cout << "[EGO Veh] Velocity requested: " << ref_vel << endl;
-
+			cout << "[Ego Veh] State requested: " << my_veh.state << "\n" << endl;
 
 
 			/*if (too_close)

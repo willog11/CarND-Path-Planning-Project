@@ -234,6 +234,7 @@ bool Vehicle::get_vehicle_behind(map<int, vector<Vehicle>> predictions, int lane
             found_vehicle = true;
         }
     }
+	std::cout << "[VEH] Vehicle behind: " << found_vehicle << endl;
     return found_vehicle;
 }
 
@@ -253,6 +254,7 @@ bool Vehicle::get_vehicle_ahead(map<int, vector<Vehicle>> predictions, int lane,
             found_vehicle = true;
         }
     }
+	std::cout << "[VEH] Vehicle ahead: " << found_vehicle << endl;
     return found_vehicle;
 }
 
