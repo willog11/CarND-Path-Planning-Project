@@ -51,6 +51,7 @@ vector<Vehicle> Vehicle::choose_next_state(map<int, vector<Vehicle>> predictions
             cost = calculate_cost(*this, predictions, trajectory);
             costs.push_back(cost);
             final_trajectories.push_back(trajectory);
+			std::cout << "State: " << *it << "cost: " << cost << endl;
         }
     }
 
@@ -253,15 +254,6 @@ bool Vehicle::get_vehicle_ahead(map<int, vector<Vehicle>> predictions, int lane,
             rVehicle = temp_vehicle;
             found_vehicle = true;
         }
-		else 
-		{
-			/*if (temp_vehicle.lane != this->lane)
-				std::cout << "[VEH] Vehicles not in same lane: " << temp_vehicle.lane << endl;
-			if (temp_vehicle.s <= this->s)
-				std::cout << "[VEH] Vehicles behind ego: " << temp_vehicle.s << endl;*/
-			if (temp_vehicle.s >= min_s)
-				std::cout << "[VEH] Vehicles outside goal dis: " << temp_vehicle.s << endl;
-		}
     }
 	std::cout << "[VEH] Vehicle ahead: " << found_vehicle << endl;
     return found_vehicle;
