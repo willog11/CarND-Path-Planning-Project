@@ -279,12 +279,12 @@ int main() {
 				double ref_y_prev = previous_path_y[prev_size - 2];
 				ref_yaw = atan2(ref_y - ref_y_prev, ref_x - ref_x_prev);
 				car_s = end_path_s;
-				car_speed = distance(ref_x_prev, ref_y_prev, ref_x, ref_y) / 0.02*2.237;
+				car_speed = distance(ref_x_prev, ref_y_prev, ref_x, ref_y) / 0.02;
 			}
 
 			my_veh.s = car_s;
 			cout << "[Ego Veh] Current speed: " << car_speed << endl;
-			my_veh.v = car_speed *2.237;
+			my_veh.v = car_speed;
 
 			//bool too_close = false;
 			//vector<Vehicle> cars;
@@ -316,7 +316,7 @@ int main() {
 
 				if (veh_lane >= 0)
 				{
-					Vehicle other_veh(veh_lane, veh_s, veh_speed *2.237, 0);
+					Vehicle other_veh(veh_lane, veh_s, veh_speed, 0);
 					vehicles.insert(std::pair<int, Vehicle>(v_id, other_veh));
 				}
 				
@@ -357,7 +357,7 @@ int main() {
 
 			my_veh.realize_next_state(trajectory);
 
-			ref_vel = my_veh.v;
+			ref_vel = my_veh.v * 2.237;
 			lane	= my_veh.lane;
 
 			cout << "[EGO Veh] Lane requested: " << lane << endl;
