@@ -217,14 +217,14 @@ int main() {
 
   Vehicle my_veh(1, 0, 0, 0);
   vector<float> road_data;
-  road_data.push_back(49);
+  road_data.push_back(58);
   road_data.push_back(3);
   road_data.push_back(30);
   road_data.push_back(0);
   road_data.push_back(7);
   my_veh.configure(road_data);
   my_veh.state = "KL";
-  my_veh.goal_s = max_s;
+  my_veh.goal_s = 30;
 
     h.onMessage([&map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy, &lane, &ref_vel, &center_of_lane, &lane_width, &spline_future_pts, &my_veh](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {
@@ -289,6 +289,7 @@ int main() {
 			//vector<Vehicle> cars;
 			cout << "[Ego Veh] Current s position: " << car_s << endl;
 			cout << "[Ego Veh] Current d position: " << lane << endl;
+			cout << "[Ego Veh] Current state: " << my_veh.state << endl;
 			
 			map<int, Vehicle> vehicles;
 			map<int, vector<Vehicle>> predictions;
