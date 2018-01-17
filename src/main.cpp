@@ -283,11 +283,12 @@ int main() {
 			}
 
 			my_veh.s = car_s;
-			my_veh.v = car_speed;
+			cout << "[Ego Veh] Current speed: " << car_speed << endl;
+			my_veh.v = car_speed *2.237;
 
 			//bool too_close = false;
 			//vector<Vehicle> cars;
-			//cout << "[Ego Veh] Current s position: " << car_s << endl;
+			cout << "[Ego Veh] Current s position: " << car_s << endl;
 			//cout << "[Ego Veh] Current d position: " << lane << endl;
 			
 			map<int, Vehicle> vehicles;
@@ -303,6 +304,7 @@ int main() {
 				double veh_s = sensor_fusion[i][5];
 				int veh_lane = (int) sensor_fusion[i][6] / 4;
 				int v_id = sensor_fusion[i][0];
+				cout << "[Other Veh] Current speed: " << veh_speed << endl;
 
 				//cout << "[Other Veh] lane: " << d << endl;
 				//cout << "[Other Veh] speed: " << veh_speed << endl;
