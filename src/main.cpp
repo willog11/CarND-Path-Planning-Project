@@ -284,10 +284,11 @@ int main() {
 
 			my_veh.s = car_s;
 			my_veh.v = car_speed;
+			my_veh.goal_s = car_s + 30;
 
 			//bool too_close = false;
 			//vector<Vehicle> cars;
-			cout << "[Ego Veh] Current s position: " << car_s << endl;
+			//cout << "[Ego Veh] Current s position: " << car_s << endl;
 			//cout << "[Ego Veh] Current d position: " << lane << endl;
 			
 			map<int, Vehicle> vehicles;
@@ -359,7 +360,7 @@ int main() {
 			lane	= my_veh.lane;
 
 			cout << "[EGO Veh] Lane requested: " << lane << endl;
-			cout << "[EGO Veh] Velocity requested: " << ref_vel << endl;
+			//cout << "[EGO Veh] Velocity requested: " << ref_vel << endl;
 			cout << "[Ego Veh] State requested: " << my_veh.state << "\n" << endl;
 
 
