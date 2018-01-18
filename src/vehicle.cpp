@@ -74,6 +74,8 @@ vector<string> Vehicle::successor_states() {
         states.push_back("PLCL");
         states.push_back("PLCR");
     } else if (state.compare("PLCL") == 0) {
+		std::cout << "[VEH] Current lane: " << lane << endl;
+		std::cout << "[VEH] Current lanes_available: " << lanes_available << endl;
         if (lane != lanes_available - 1) {
             states.push_back("PLCL");
             states.push_back("LCL");
@@ -122,16 +124,16 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 
         if (get_vehicle_behind(predictions, lane, vehicle_behind)) {
             new_velocity = vehicle_ahead.v; //must travel at the speed of traffic, regardless of preferred buffer
-			std::cout << "[VEH] Vehicle behind use velocity" << new_velocity << endl;
+			std::cout << "[VEH] Vehicle behind use velocity: " << new_velocity << endl;
         } else {
             float max_velocity_in_front = (vehicle_ahead.s - this->s - this->preferred_buffer) + vehicle_ahead.v - 0.5 * (this->a);
             new_velocity = min(min(max_velocity_in_front, max_velocity_accel_limit), this->target_speed);
-			std::cout << "[VEH] Max velocity with accel" << max_velocity_accel_limit << endl;
-			std::cout << "[VEH] Max velocity in front" << max_velocity_in_front << endl;
+			std::cout << "[VEH] Max velocity with accel: " << max_velocity_accel_limit << endl;
+			std::cout << "[VEH] Max velocity in front: " << max_velocity_in_front << endl;
         }
     } else {
         new_velocity = min(max_velocity_accel_limit, this->target_speed);
-		std::cout << "[VEH] Max velocity with accel" << max_velocity_accel_limit << endl;
+		std::cout << "[VEH] Max velocity with accel: " << max_velocity_accel_limit << endl;
     }
     
     new_accel = new_velocity - this->v; //Equation: (v_1 - v_0)/t = acceleration
