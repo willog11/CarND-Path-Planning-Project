@@ -221,7 +221,7 @@ int main() {
   road_data.push_back(3);
   road_data.push_back(30);
   road_data.push_back(0);
-  road_data.push_back(2);
+  road_data.push_back(0.224);
   my_veh.configure(road_data);
   my_veh.state = "KL";
   my_veh.goal_s = 30;
