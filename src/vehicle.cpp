@@ -69,6 +69,7 @@ vector<string> Vehicle::successor_states() {
     vector<string> states;
     states.push_back("KL");
     string state = this->state;
+	std::cout << "[VEH] Current state: " << state << endl;
     if(state.compare("KL") == 0) {
         states.push_back("PLCL");
         states.push_back("PLCR");
@@ -121,6 +122,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 
         if (get_vehicle_behind(predictions, lane, vehicle_behind)) {
             new_velocity = vehicle_ahead.v; //must travel at the speed of traffic, regardless of preferred buffer
+			std::cout << "[VEH] Vehicle behind use velocity" << new_velocity << endl;
         } else {
             float max_velocity_in_front = (vehicle_ahead.s - this->s - this->preferred_buffer) + vehicle_ahead.v - 0.5 * (this->a);
             new_velocity = min(min(max_velocity_in_front, max_velocity_accel_limit), this->target_speed);
