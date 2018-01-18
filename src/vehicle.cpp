@@ -224,12 +224,12 @@ bool Vehicle::get_vehicle_behind(map<int, vector<Vehicle>> predictions, int lane
     Returns a true if a vehicle is found behind the current vehicle, false otherwise. The passed reference
     rVehicle is updated if a vehicle is found.
     */
-    int max_s = -1;
+    int max_s = this->s - 30;
     bool found_vehicle = false;
     Vehicle temp_vehicle;
     for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
         temp_vehicle = it->second[0];
-        if (temp_vehicle.lane == this->lane && temp_vehicle.s < this->s && temp_vehicle.s > max_s) {
+        if (temp_vehicle.lane == this->lane && temp_vehicle.s < this->s && temp_vehicle.s < max_s) {
             max_s = temp_vehicle.s;
             rVehicle = temp_vehicle;
             found_vehicle = true;
