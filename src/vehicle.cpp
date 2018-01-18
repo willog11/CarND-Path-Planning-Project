@@ -69,19 +69,15 @@ vector<string> Vehicle::successor_states() {
     vector<string> states;
     states.push_back("KL");
     string state = this->state;
-	std::cout << "[VEH] Current state: " << state << endl;
     if(state.compare("KL") == 0) {
         states.push_back("PLCL");
         states.push_back("PLCR");
     } else if (state.compare("PLCL") == 0) {
-		std::cout << "[VEH] Current lane: " << lane << endl;
-		std::cout << "[VEH] Current lanes_available: " << lanes_available << endl;
         if (lane != 0) {
             states.push_back("PLCL");
             states.push_back("LCL");
         }
     } else if (state.compare("PLCR") == 0) {
-		std::cout << "[VEH] Current lane: " << lane << endl;
         if (lane != lanes_available - 1) {
             states.push_back("PLCR");
             states.push_back("LCR");
@@ -232,20 +228,19 @@ bool Vehicle::get_vehicle_behind(map<int, vector<Vehicle>> predictions, int lane
     Returns a true if a vehicle is found behind the current vehicle, false otherwise. The passed reference
     rVehicle is updated if a vehicle is found.
     */
-    int max_s = preferred_buffer;
+    int min_gap = preferred_buffer;
     bool found_vehicle = false;
     Vehicle temp_vehicle;
     for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
         temp_vehicle = it->second[0];
 		float dist_between_veh = this->s - temp_vehicle.s;
-        if (temp_vehicle.lane == this->lane && temp_vehicle.s < this->s && (dist_between_veh < max_s)) {
-			std::cout << "[VEH] s of ego: "<< this->s << "s of veh: "<< temp_vehicle.s << "Vehicle behind of dist: " << dist_between_veh << endl;
+        if (temp_vehicle.lane == this->lane && temp_vehicle.s < this->s && (dist_between_veh > min_gap)) {
+			std::cout << "[VEH] s of ego: "<< this->s << " s of veh behind: "<< temp_vehicle.s << " Vehicle behind of dist: " << dist_between_veh << endl;
 			//max_s = temp_vehicle.s;
             rVehicle = temp_vehicle;
             found_vehicle = true;
         }
     }
-	std::cout << "[VEH] Vehicle behind: " << found_vehicle << endl;
     return found_vehicle;
 }
 
