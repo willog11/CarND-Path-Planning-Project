@@ -220,11 +220,11 @@ int main() {
   road_data.push_back(25.9283);
   road_data.push_back(3);
   road_data.push_back(30);
-  road_data.push_back(0);
+  road_data.push_back(1);
   road_data.push_back(0.224);
   my_veh.configure(road_data);
   my_veh.state = "KL";
-  my_veh.goal_s = 30;
+  my_veh.goal_s = 90;
 
     h.onMessage([&map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy, &lane, &ref_vel, &center_of_lane, &lane_width, &spline_future_pts, &my_veh](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {
@@ -284,7 +284,7 @@ int main() {
 
 			my_veh.s = car_s;
 			my_veh.v = car_speed;
-			my_veh.goal_s = car_s + 30;
+			my_veh.goal_s = car_s + 90;
 
 			//bool too_close = false;
 			//vector<Vehicle> cars;
