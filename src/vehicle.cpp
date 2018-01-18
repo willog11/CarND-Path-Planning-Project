@@ -70,8 +70,13 @@ vector<string> Vehicle::successor_states() {
     states.push_back("KL");
     string state = this->state;
     if(state.compare("KL") == 0) {
-        states.push_back("PLCL");
-        states.push_back("PLCR");
+		if(lane != 0) {
+			states.push_back("PLCL");
+		}
+
+		if (lane != lanes_available - 1) {
+			states.push_back("PLCR");
+		}
     } else if (state.compare("PLCL") == 0) {
         if (lane != 0) {
             states.push_back("PLCL");
