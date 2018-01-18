@@ -76,13 +76,13 @@ vector<string> Vehicle::successor_states() {
     } else if (state.compare("PLCL") == 0) {
 		std::cout << "[VEH] Current lane: " << lane << endl;
 		std::cout << "[VEH] Current lanes_available: " << lanes_available << endl;
-        if (lane != lanes_available - 1) {
+        if (lane != 0) {
             states.push_back("PLCL");
             states.push_back("LCL");
         }
     } else if (state.compare("PLCR") == 0) {
 		std::cout << "[VEH] Current lane: " << lane << endl;
-        if (lane != 0) {
+        if (lane != lanes_available - 1) {
             states.push_back("PLCR");
             states.push_back("LCR");
         }
