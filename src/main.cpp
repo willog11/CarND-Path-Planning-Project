@@ -217,7 +217,7 @@ int main() {
 
   Vehicle my_veh(1, 0, 0, 0);
   vector<float> road_data;
-  road_data.push_back(25.9283);
+  road_data.push_back(24.5872);
   road_data.push_back(3);
   road_data.push_back(30);
   road_data.push_back(1);

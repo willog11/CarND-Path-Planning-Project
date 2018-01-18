@@ -24,6 +24,23 @@ float goal_distance_cost(const Vehicle & vehicle, const vector<Vehicle> & trajec
     return cost;
 }
 
+float goal_distance_cost(const Vehicle & vehicle, const vector<Vehicle> & trajectory, const map<int, vector<Vehicle>> & predictions, map<string, float> & data) {
+	/*
+	Cost increases based on distance of intended lane (for planning a lane change) and final lane of trajectory.
+	Cost of being out of goal lane also becomes larger as vehicle approaches goal distance.
+	*/
+	float cost;
+	float distance = data["distance_to_goal"];
+	if (distance > 0) {
+		cost = 1 - exp(-(abs(2.0*vehicle.goal_lane - data["intended_lane"] - data["final_lane"]) / distance));
+	}
+	else {
+		cost = 1;
+	}
+	return cost;
+}
+
+
 float inefficiency_cost(const Vehicle & vehicle, const vector<Vehicle> & trajectory, const map<int, vector<Vehicle>> & predictions, map<string, float> & data) {
     /*
     Cost becomes higher for trajectories with intended lane and final lane that have traffic slower than vehicle's target speed. 
