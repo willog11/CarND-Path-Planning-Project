@@ -17,7 +17,7 @@ float goal_distance_cost(const Vehicle & vehicle, const vector<Vehicle> & trajec
     float cost;
     float distance = data["distance_to_goal"];
     if (distance > 0) {
-        cost = 1 - 2*exp(-(abs(2.0*vehicle.goal_lane - data["intended_lane"] - data["final_lane"]) / distance));
+        cost = 1 - exp(-(abs(2.0*vehicle.goal_lane - data["intended_lane"] - data["final_lane"]) / distance));
     } else {
         cost = 1;
     }
