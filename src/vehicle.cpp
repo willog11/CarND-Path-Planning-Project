@@ -51,7 +51,7 @@ vector<Vehicle> Vehicle::choose_next_state(map<int, vector<Vehicle>> predictions
             cost = calculate_cost(*this, predictions, trajectory);
             costs.push_back(cost);
             final_trajectories.push_back(trajectory);
-			std::cout << "State: " << *it << "cost: " << cost << endl;
+			std::cout << "[VEH] State: " << *it << "cost: " << cost << endl;
         }
     }
 
@@ -81,6 +81,7 @@ vector<string> Vehicle::successor_states() {
             states.push_back("LCL");
         }
     } else if (state.compare("PLCR") == 0) {
+		std::cout << "[VEH] Current lane: " << lane << endl;
         if (lane != 0) {
             states.push_back("PLCR");
             states.push_back("LCR");
