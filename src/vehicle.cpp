@@ -137,7 +137,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 			std::cout << "[VEH] NVB:Max velocity in front: " << max_velocity_in_front << endl;
 			if (new_accel > this->max_acceleration)
 			{
-				new_velocity -= (this->max_acceleration * 0.02);
+				new_velocity = this->v - (this->max_acceleration * 0.02);
 				std::cout << "[VEH] NVB: Smoothing velocity" << endl;
 			}
         }
