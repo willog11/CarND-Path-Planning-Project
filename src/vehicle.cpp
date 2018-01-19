@@ -145,10 +145,10 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
         }
     } else {
         new_velocity = min(max_velocity_accel_limit, this->target_speed);
-		std::cout << "[VEH] NVA: Max velocity with accel: " << max_velocity_accel_limit << endl;
+		//std::cout << "[VEH] NVA: Max velocity with accel: " << max_velocity_accel_limit << endl;
     }
     
-	std::cout << "[VEH]: Final velocity: " << new_velocity << endl;
+	//std::cout << "[VEH]: Final velocity: " << new_velocity << endl;
     new_accel = (new_velocity - this->v) / 0.02; //Equation: (v_1 - v_0)/t = acceleration
     new_position = this->s + new_velocity * 0.02 + (new_accel * 0.02 * 0.02) / 2.0; // Equation distance = s + vt + 0.5a(t^2)
 	std::cout << "[VEH]: Final acceleration: " << new_accel << endl;
@@ -299,7 +299,7 @@ vector<Vehicle> Vehicle::generate_predictions(int horizon) {
 		delta_t = 0.02 * i + 1;
         next_v = position_at(delta_t) - s;
       }
-	  cout << "[VEH] Predicted v: " << next_v << endl;
+	  //cout << "[VEH] Predicted v: " << next_v << endl;
       predictions.push_back(Vehicle(this->lane, next_s, next_v, 0));
   	}
     return predictions;
