@@ -130,13 +130,14 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
         } else {
             float max_velocity_in_front = (vehicle_ahead.s - this->s - this->preferred_buffer) + vehicle_ahead.v * 0.02 - 0.5 * (this->a) * 0.02 * 0.02; // Equation: d = d0+ vt -0.5a(t^2)
             new_velocity = min(min(max_velocity_in_front, max_velocity_accel_limit), this->target_speed);
-			float new_accel =  (new_velocity - this->v) / 0.02;
+			float new_accel =  (this->v - new_velocity) / 0.02;
+			std::cout << "[VEH] Max velocity with accel: " << max_velocity_accel_limit << endl;
+			std::cout << "[VEH] Max velocity in front: " << max_velocity_in_front << endl;
 			if (new_accel > this->max_acceleration)
 			{
 				new_velocity -= this->a;
+				std::cout << "[VEH] Smoothing velocity: " << new_velocity << endl;
 			}
-			std::cout << "[VEH] Max velocity with accel: " << max_velocity_accel_limit << endl;
-			std::cout << "[VEH] Max velocity in front: " << max_velocity_in_front << endl;
         }
     } else {
         new_velocity = min(max_velocity_accel_limit, this->target_speed);
