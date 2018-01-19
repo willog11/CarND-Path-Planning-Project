@@ -304,8 +304,8 @@ int main() {
 				int veh_lane = (int) sensor_fusion[i][6] / 4;
 				int v_id = sensor_fusion[i][0];
 
-				//cout << "[Other Veh] lane: " << d << endl;
-				//cout << "[Other Veh] speed: " << veh_speed << endl;
+				cout << "[Other Veh] lane: " << veh_lane << endl;
+				cout << "[Other Veh] speed: " << veh_speed << endl;
 
 				// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)
 				veh_s += (double)prev_size * 0.02 * veh_speed;
