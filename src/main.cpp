@@ -310,9 +310,9 @@ int main() {
 
 				if (veh_lane >= 0)
 				{
-					cout << "[Other Veh] lane: " << veh_lane << endl;
-					cout << "[Other Veh] speed: " << veh_speed << endl;
-					cout << "[Other Veh] S position: " << veh_s << endl;
+					//cout << "[Other Veh] lane: " << veh_lane << endl;
+					//cout << "[Other Veh] speed: " << veh_speed << endl;
+					//cout << "[Other Veh] S position: " << veh_s << endl;
 					Vehicle other_veh(veh_lane, veh_s, veh_speed, 0);
 					vehicles.insert(std::pair<int, Vehicle>(v_id, other_veh));
 				}
