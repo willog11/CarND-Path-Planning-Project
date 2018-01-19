@@ -239,6 +239,7 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
 
 float Vehicle::position_at(int t) {
 	t *= 0.02;
+	cout << "[VEH] position_at() v: " << this->v << endl;
     return this->s + this->v*t + this->a*t*t/2.0;
 }
 
@@ -290,6 +291,8 @@ vector<Vehicle> Vehicle::generate_predictions(int horizon) {
 	vector<Vehicle> predictions;
     for(int i = 0; i < horizon; i++) {
       float next_s = position_at(i);
+	  cout << "[VEH] Current s: " << s << endl;
+	  cout << "[VEH] Predicted next_s: " << next_s << endl;
       float next_v = 0;
       if (i < horizon-1) {
         next_v = (position_at(i+1) - s)/0.02;
