@@ -115,7 +115,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
     for a given lane. Tries to choose the maximum velocity and acceleration, 
     given other vehicle positions and accel/velocity constraints.
     */
-    float max_velocity_accel_limit = this->max_acceleration * 0.02 + this->v;
+    float max_velocity_accel_limit = this->max_acceleration + this->v;
     float new_position;
     float new_velocity;
     float new_accel;
@@ -128,14 +128,14 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
             new_velocity = vehicle_ahead.v; //must travel at the speed of traffic, regardless of preferred buffer
 			std::cout << "[VEH] VB: Vehicle behind use velocity: " << new_velocity << endl;
         } else {
-            float max_velocity_in_front = (vehicle_ahead.s - this->s - this->preferred_buffer) + vehicle_ahead.v * 0.02 - 0.5 * (this->a) * 0.02 * 0.02; // Equation: d = d0+ vt -0.5a(t^2)
+            float max_velocity_in_front = (vehicle_ahead.s - this->s - this->preferred_buffer) + vehicle_ahead.v - 0.5 * (this->a); // Equation: d = d0+ vt -0.5a(t^2)
             new_velocity = min(min(max_velocity_in_front, max_velocity_accel_limit), this->target_speed);
-			float new_accel =  (this->v - new_velocity) / 0.02;
+			float new_accel =  this->v - new_velocity;
 			std::cout << "[VEH] NVB: Max velocity with accel: " << max_velocity_accel_limit << endl;
 			std::cout << "[VEH] NVB:Max velocity in front: " << max_velocity_in_front << endl;
 			if (new_accel > this->max_acceleration)
 			{
-				new_velocity -= (this->max_acceleration * 0.02);
+				new_velocity -= this->max_acceleration;
 				std::cout << "[VEH] NVB: Smoothing velocity " << endl;
 			}
         }
@@ -145,8 +145,8 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
     }
     
 	std::cout << "[VEH]: Final velocity: " << new_velocity << endl;
-    new_accel = (new_velocity - this->v) / 0.02; //Equation: (v_1 - v_0)/t = acceleration
-    new_position = this->s + new_velocity * 0.02 + (new_accel * 0.02 * 0.02) / 2.0; // Equation distance = s + vt + 0.5a(t^2)
+    new_accel = (new_velocity - this->v); //Equation: (v_1 - v_0)/t = acceleration
+    new_position = this->s + new_velocity + new_accel / 2.0; // Equation distance = s + vt + 0.5a(t^2)
 	std::cout << "[VEH]: Final acceleration: " << new_accel << endl;
 	std::cout << "[VEH]: Final position: " << new_position << endl;
     return{new_position, new_velocity, new_accel};
