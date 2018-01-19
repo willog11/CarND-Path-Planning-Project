@@ -131,6 +131,8 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
             float max_velocity_in_front = (vehicle_ahead.s - this->s - this->preferred_buffer) + vehicle_ahead.v * 0.02 - 0.5 * (this->a) * 0.02 * 0.02; // Equation: d = d0+ vt -0.5a(t^2)
             new_velocity = min(min(max_velocity_in_front, max_velocity_accel_limit), this->target_speed);
 			float new_accel =  (this->v - new_velocity) / 0.02;
+			std::cout << "[VEH] NVB: Vehical ahead s: " << vehicle_ahead.s << endl
+			std::cout << "[VEH] NVB: Vehical ahead velocity: " << vehicle_ahead.v << endl;
 			std::cout << "[VEH] NVB: New velocity: " << new_velocity << endl;
 			std::cout << "[VEH] NVB: New accel: " << new_accel << endl;
 			std::cout << "[VEH] NVB: Max velocity with accel: " << max_velocity_accel_limit << endl;
