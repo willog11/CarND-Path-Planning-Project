@@ -138,7 +138,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 		std::cout << "[VEH] Max velocity with accel: " << max_velocity_accel_limit << endl;
     }
     
-    new_accel = new_velocity - this->v; //Equation: (v_1 - v_0)/t = acceleration
+    new_accel = (new_velocity - this->v) / 0.02; //Equation: (v_1 - v_0)/t = acceleration
     new_position = this->s + new_velocity + new_accel / 2.0;
     return{new_position, new_velocity, new_accel};
     
@@ -225,6 +225,7 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
 }
 
 float Vehicle::position_at(int t) {
+	t *= 0.02;
     return this->s + this->v*t + this->a*t*t/2.0;
 }
 
