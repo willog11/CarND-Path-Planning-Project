@@ -359,7 +359,7 @@ int main() {
 			lane	= my_veh.lane;
 
 			cout << "[EGO Veh] Lane requested: " << lane << endl;
-			//cout << "[EGO Veh] Velocity requested: " << ref_vel << endl;
+			cout << "[EGO Veh] Velocity requested: " << ref_vel << endl;
 			cout << "[Ego Veh] State requested: " << my_veh.state << "\n" << endl;
 
 
