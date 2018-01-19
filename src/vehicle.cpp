@@ -139,7 +139,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
     }
     
     new_accel = (new_velocity - this->v) / 0.02; //Equation: (v_1 - v_0)/t = acceleration
-    new_position = this->s + new_velocity + new_accel / 2.0;
+    new_position = this->s + new_velocity * 0.02 + (new_accel * 0.02 * 0.02) / 2.0; // Equation distance = s + vt + 0.5a(t^2)
     return{new_position, new_velocity, new_accel};
     
 }
