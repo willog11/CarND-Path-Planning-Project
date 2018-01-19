@@ -290,7 +290,7 @@ vector<Vehicle> Vehicle::generate_predictions(int horizon) {
       float next_s = position_at(i);
       float next_v = 0;
       if (i < horizon-1) {
-        next_v = position_at(i+1) - s;
+        next_v = (position_at(i+1) - s)/0.02;
       }
       predictions.push_back(Vehicle(this->lane, next_s, next_v, 0));
   	}

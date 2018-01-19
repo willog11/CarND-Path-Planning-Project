@@ -343,7 +343,7 @@ int main() {
 			map<int, Vehicle>::iterator it = vehicles.begin();
 			while (it != vehicles.end()) {
 				int v_id = it->first;
-				vector<Vehicle> preds = it->second.generate_predictions(50);
+				vector<Vehicle> preds = it->second.generate_predictions();
 				predictions[v_id] = preds;
 				it++;
 			}
