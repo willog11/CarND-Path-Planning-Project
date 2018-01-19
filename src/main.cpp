@@ -304,16 +304,15 @@ int main() {
 				int veh_lane = (int) sensor_fusion[i][6] / 4;
 				int v_id = sensor_fusion[i][0];
 
-				cout << "[Other Veh] lane: " << veh_lane << endl;
-				cout << "[Other Veh] speed: " << veh_speed << endl;
-
 				// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)
 				veh_s += (double)prev_size * 0.02 * veh_speed;
 
-				//cout << "[Other Veh] S position: " << veh_s << endl;
 
 				if (veh_lane >= 0)
 				{
+					cout << "[Other Veh] lane: " << veh_lane << endl;
+					cout << "[Other Veh] speed: " << veh_speed << endl;
+					cout << "[Other Veh] S position: " << veh_s << endl;
 					Vehicle other_veh(veh_lane, veh_s, veh_speed, 0);
 					vehicles.insert(std::pair<int, Vehicle>(v_id, other_veh));
 				}
