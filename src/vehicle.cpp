@@ -115,7 +115,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
     for a given lane. Tries to choose the maximum velocity and acceleration, 
     given other vehicle positions and accel/velocity constraints.
     */
-    float max_velocity_accel_limit = this->max_acceleration + this->v;
+    float max_velocity_accel_limit = this->max_acceleration * 0.02 + this->v;
     float new_position;
     float new_velocity;
     float new_accel;
