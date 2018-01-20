@@ -146,6 +146,11 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 		{
 			new_velocity = this->v - (this->max_acceleration * 0.02);
 			std::cout << "[VEH] NVB: Smoothing velocity" << endl;
+
+			if (new_velocity <= 0)
+			{
+				new_velocity = 0.1;
+			}
 		}
 
     } else {
@@ -252,13 +257,13 @@ bool Vehicle::get_vehicle_behind(map<int, vector<Vehicle>> predictions, int lane
     Returns a true if a vehicle is found behind the current vehicle, false otherwise. The passed reference
     rVehicle is updated if a vehicle is found.
     */
-    int max_gap = 10;
+    int max_gap = this->preferred_buffer;
     bool found_vehicle = false;
     Vehicle temp_vehicle;
     for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
         temp_vehicle = it->second[0];
 		float dist_between_veh = abs(this->s - temp_vehicle.s);
-        if (temp_vehicle.lane == this->lane && temp_vehicle.s < this->s && (dist_between_veh < max_gap)) {
+        if (temp_vehicle.lane == this->lane && temp_vehicle.s < this->s && (dist_between_veh <= max_gap)) {
 			std::cout << "[VEH] s of ego: "<< this->s << " s of veh behind: "<< temp_vehicle.s << " Vehicle behind of dist: " << dist_between_veh << endl;
 			//max_s = temp_vehicle.s;
             rVehicle = temp_vehicle;
