@@ -145,7 +145,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 		if (abs(new_accel) > this->max_acceleration)
 		{
 			new_velocity = this->v - (this->max_acceleration * 0.02);
-			std::cout << "[VEH] NVB: Smoothing velocity" << endl;
+			//std::cout << "[VEH] NVB: Smoothing velocity" << endl;
 
 			if (new_velocity <= 0)
 			{
@@ -236,8 +236,11 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
     //Check if a lane change is possible (check if another vehicle occupies that spot).
     for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
         next_lane_vehicle = it->second[0];
-        if (next_lane_vehicle.s == this->s && next_lane_vehicle.lane == new_lane) {
+		int max_gap = this->preferred_buffer * 0.5;
+		float dist_between_veh = abs(this->s - next_lane_vehicle.s);
+        if (dist_between_veh <= max_gap && next_lane_vehicle.lane == new_lane) {
             //If lane change is not possible, return empty trajectory.
+			std::cout << "[VEH] Vehicle found in next lane - aborting lane change" << endl;
             return trajectory;
         }
     }
