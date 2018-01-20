@@ -7,7 +7,7 @@
 
 const float REACH_GOAL = pow(10, 6);
 const float EFFICIENCY = pow(10, 6);
-const float COMFORT = pow(10, 3);
+const float COMFORT = pow(10, 4);
 
 float lane_change_cost(const Vehicle & vehicle, const vector<Vehicle> & trajectory, const map<int, vector<Vehicle>> & predictions, map<string, float> & data) {
 	/*
