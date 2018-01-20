@@ -40,6 +40,7 @@ float inefficiency_cost(const Vehicle & vehicle, const vector<Vehicle> & traject
         proposed_speed_final = vehicle.target_speed;
     }
     
+	std::cout << "[COST] Proposed speed intended: " << proposed_speed_intended << " proposed_speed_final: "<<proposed_speed_final << endl;
     float cost = (2.0*vehicle.target_speed - proposed_speed_intended - proposed_speed_final)/vehicle.target_speed;
 
     return cost;
