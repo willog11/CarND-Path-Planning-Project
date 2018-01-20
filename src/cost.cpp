@@ -5,7 +5,7 @@
 #include <map>
 #include <math.h>
 
-const float REACH_GOAL = pow(10, 5);
+const float REACH_GOAL = pow(10, 6);
 const float EFFICIENCY = pow(10, 6);
 const float COMFORT = pow(10, 2);
 
