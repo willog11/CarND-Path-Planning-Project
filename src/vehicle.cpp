@@ -236,7 +236,7 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
     //Check if a lane change is possible (check if another vehicle occupies that spot).
     for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
         next_lane_vehicle = it->second[0];
-		int max_gap = this->preferred_buffer * 2;
+		int max_gap = this->preferred_buffer;
 		float dist_between_veh = abs(this->s - (next_lane_vehicle.s + next_lane_vehicle.v * 0.02));
         if (dist_between_veh <= max_gap && next_lane_vehicle.lane == new_lane) {
             //If lane change is not possible, return empty trajectory.
@@ -267,7 +267,7 @@ bool Vehicle::get_vehicle_behind(map<int, vector<Vehicle>> predictions, int lane
         temp_vehicle = it->second[0];
 		float dist_between_veh = abs(this->s - temp_vehicle.s);
         if (temp_vehicle.lane == this->lane && temp_vehicle.s < this->s && (dist_between_veh <= max_gap)) {
-			std::cout << "[VEH] s of ego: "<< this->s << " s of veh behind: "<< temp_vehicle.s << " Vehicle behind of dist: " << dist_between_veh << endl;
+			//std::cout << "[VEH] s of ego: "<< this->s << " s of veh behind: "<< temp_vehicle.s << " Vehicle behind of dist: " << dist_between_veh << endl;
 			//max_s = temp_vehicle.s;
             rVehicle = temp_vehicle;
             found_vehicle = true;
