@@ -236,8 +236,8 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
     //Check if a lane change is possible (check if another vehicle occupies that spot).
     for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
         next_lane_vehicle = it->second[0];
-		int max_gap = this->preferred_buffer;
-		float dist_between_veh = abs((this->s + this->v * 0.02) - (next_lane_vehicle.s + next_lane_vehicle.v * 0.02));
+		int max_gap = this->preferred_buffer * 2;
+		float dist_between_veh = abs(this->s - (next_lane_vehicle.s + next_lane_vehicle.v * 0.02));
         if (dist_between_veh <= max_gap && next_lane_vehicle.lane == new_lane) {
             //If lane change is not possible, return empty trajectory.
 			//std::cout << "[VEH] Vehicle found in next lane - aborting lane change" << endl;
