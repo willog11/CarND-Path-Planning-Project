@@ -219,7 +219,7 @@ int main() {
   vector<float> road_data;
   road_data.push_back(21.905);
   road_data.push_back(3);
-  road_data.push_back(20);
+  road_data.push_back(30);
   road_data.push_back(1);
   road_data.push_back(8);
   my_veh.configure(road_data);
@@ -283,7 +283,7 @@ int main() {
 
 			my_veh.s = car_s;
 			my_veh.v = car_speed;
-			my_veh.goal_s = car_s + 20;
+			my_veh.goal_s = car_s + 30;
 
 			//bool too_close = false;
 			//vector<Vehicle> cars;
