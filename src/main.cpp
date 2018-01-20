@@ -287,7 +287,7 @@ int main() {
 
 			//bool too_close = false;
 			//vector<Vehicle> cars;
-			cout << "[Ego Veh] Current s position: " << car_s << endl;
+			//cout << "[Ego Veh] Current s position: " << car_s << endl;
 			//cout << "[Ego Veh] Current d position: " << lane << endl;
 			
 			map<int, Vehicle> vehicles;
@@ -357,9 +357,9 @@ int main() {
 			ref_vel = my_veh.v;
 			lane	= my_veh.lane;
 
-			cout << "[EGO Veh] Lane requested: " << lane << endl;
-			cout << "[EGO Veh] Velocity requested: " << ref_vel << endl;
-			cout << "[Ego Veh] State requested: " << my_veh.state << "\n" << endl;
+			//cout << "[EGO Veh] Lane requested: " << lane << endl;
+			//cout << "[EGO Veh] Velocity requested: " << ref_vel << endl;
+			//cout << "[Ego Veh] State requested: " << my_veh.state << "\n" << endl;
 
 
 			/*if (too_close)

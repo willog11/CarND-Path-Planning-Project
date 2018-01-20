@@ -51,7 +51,7 @@ vector<Vehicle> Vehicle::choose_next_state(map<int, vector<Vehicle>> predictions
             cost = calculate_cost(*this, predictions, trajectory);
             costs.push_back(cost);
             final_trajectories.push_back(trajectory);
-			std::cout << "[VEH] State: " << *it << "cost: " << cost << endl;
+			//std::cout << "[VEH] State: " << *it << "cost: " << cost << endl;
         }
     }
 
@@ -125,7 +125,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 
         if (get_vehicle_behind(predictions, lane, vehicle_behind)) {
             new_velocity = vehicle_ahead.v; //must travel at the speed of traffic, regardless of preferred buffer
-			std::cout << "[VEH] VB: Vehicle behind use velocity: " << new_velocity << endl;
+			//std::cout << "[VEH] VB: Vehicle behind use velocity: " << new_velocity << endl;
         } else {
             //float max_velocity_in_front = (vehicle_ahead.s - this->s - this->preferred_buffer) + vehicle_ahead.v * 0.02 - 0.5 * (this->a) * 0.02 * 0.02; // Equation: d = d0+ vt -0.5a(t^2)
 
@@ -145,7 +145,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 		if (abs(new_accel) > this->max_acceleration)
 		{
 			new_velocity = this->v - (this->max_acceleration * 0.02);
-			std::cout << "[VEH] NVB: Smoothing velocity" << endl;
+			//std::cout << "[VEH] NVB: Smoothing velocity" << endl;
 
 			if (new_velocity <= 0)
 			{
@@ -240,7 +240,7 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
 		float dist_between_veh = abs((this->s + this->v * 0.02) - (next_lane_vehicle.s + next_lane_vehicle.v * 0.02));
         if (dist_between_veh <= max_gap && next_lane_vehicle.lane == new_lane) {
             //If lane change is not possible, return empty trajectory.
-			std::cout << "[VEH] Vehicle found in next lane - aborting lane change" << endl;
+			//std::cout << "[VEH] Vehicle found in next lane - aborting lane change" << endl;
             return trajectory;
         }
     }
