@@ -213,7 +213,7 @@ int main() {
   const int center_of_lane = lane_width*0.5;
 
   // Incremental distance for spline points ahead of starting reference
-  const int spline_future_pts = 40;
+  const int spline_future_pts = 30;
 
   Vehicle my_veh(1, 0, 0, 0);
   vector<float> road_data;
