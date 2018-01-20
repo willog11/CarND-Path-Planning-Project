@@ -31,16 +31,16 @@ float inefficiency_cost(const Vehicle & vehicle, const vector<Vehicle> & traject
     */
 
     float proposed_speed_intended = lane_speed(predictions, data["intended_lane"]);
-    if (proposed_speed_intended < 0) {
+    if (proposed_speed_intended < 0 || proposed_speed_intended > vehicle.target_speed) {
         proposed_speed_intended = vehicle.target_speed;
     }
 
     float proposed_speed_final = lane_speed(predictions, data["final_lane"]);
-    if (proposed_speed_final < 0) {
+    if (proposed_speed_final < 0 || proposed_speed_final > vehicle.target_speed) {
         proposed_speed_final = vehicle.target_speed;
     }
     
-	std::cout << "[COST] Proposed speed intended: " << proposed_speed_intended << " proposed_speed_final: "<<proposed_speed_final << endl;
+	//std::cout << "[COST] Proposed speed intended: " << proposed_speed_intended << " proposed_speed_final: "<<proposed_speed_final << endl;
     float cost = (2.0*vehicle.target_speed - proposed_speed_intended - proposed_speed_final)/vehicle.target_speed;
 
     return cost;

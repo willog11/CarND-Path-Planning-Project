@@ -155,7 +155,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 
     } else {
         new_velocity = min(max_velocity_accel_limit, this->target_speed);
-		//std::cout << "[VEH] NVA: Max velocity with accel: " << max_velocity_accel_limit << endl;
+		std::cout << "[VEH] NVA: Max velocity with accel: " << max_velocity_accel_limit << endl;
     }
     
 	//std::cout << "[VEH]: Final velocity: " << new_velocity << endl;
