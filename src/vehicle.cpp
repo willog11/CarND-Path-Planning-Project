@@ -132,7 +132,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 			float max_velocity_in_front = (vehicle_ahead.s + vehicle_ahead.v * 0.02 - this->s - this->preferred_buffer) / 0.02; // Equation: v = s1-s0/t
             new_velocity = min(min(max_velocity_in_front, max_velocity_accel_limit), this->target_speed);
 			float new_accel =  (this->v - new_velocity) / 0.02;
-			//std::cout << "[VEH] NVB: Vehical ahead s: " << vehicle_ahead.s << endl;
+			std::cout << "[VEH] NVB: Vehical ahead s: " << vehicle_ahead.s << endl;
 			//std::cout << "[VEH] NVB: Vehical ahead velocity: " << vehicle_ahead.v << endl;
 			std::cout << "[VEH] NVB: New velocity: " << new_velocity << endl;
 			std::cout << "[VEH] NVB: New accel: " << new_accel << endl;
@@ -269,7 +269,7 @@ bool Vehicle::get_vehicle_ahead(map<int, vector<Vehicle>> predictions, int lane,
     Returns a true if a vehicle is found ahead of the current vehicle, false otherwise. The passed reference
     rVehicle is updated if a vehicle is found.
     */
-    int min_s = this->preferred_buffer + this->s;
+    int min_s = this->preferred_buffer * 2 + this->s;
     bool found_vehicle = false;
     Vehicle temp_vehicle;
     for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
