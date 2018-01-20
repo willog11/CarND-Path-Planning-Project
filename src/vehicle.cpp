@@ -138,7 +138,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 			//std::cout << "[VEH] NVB: New velocity: " << new_velocity << endl;
 			//std::cout << "[VEH] NVB: New accel: " << new_accel << endl;
 			//std::cout << "[VEH] NVB: Max velocity with accel: " << max_velocity_accel_limit << endl;
-			std::cout << "[VEH] NVB:Max velocity in front: " << max_velocity_in_front << endl;
+			//std::cout << "[VEH] NVB:Max velocity in front: " << max_velocity_in_front << endl;
         }
 		
 		new_accel = (new_velocity - this->v) / 0.02;
@@ -155,7 +155,7 @@ vector<float> Vehicle::get_kinematics(map<int, vector<Vehicle>> predictions, int
 
     } else {
         new_velocity = min(max_velocity_accel_limit, this->target_speed);
-		std::cout << "[VEH] NVA: Max velocity with accel: " << max_velocity_accel_limit << endl;
+		//std::cout << "[VEH] NVA: Max velocity with accel: " << max_velocity_accel_limit << endl;
     }
     
 	//std::cout << "[VEH]: Final velocity: " << new_velocity << endl;
