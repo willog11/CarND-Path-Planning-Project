@@ -1,6 +1,72 @@
+# Udacity Self-Driving Car Engineer Nanodegree
+## Path Planning Project
+### Introduction
+
+The goal of this project was to implement a path planning algorithm that utilizes given way points and nearby vehicles (simulating sensor fusion).  The algorithm should enable the ego vehicle to drive around the track safely, in that the ego vehicle:
+
+- Shall not collide with any other vehicle
+- Shall not go off the track (3 far right lanes)
+- Shall be able to overtake when the adjacent lane is free and the current lane has slower moving traffic
+- Shall not exert any extreme accelerations or jerks in both lateral and longitudinal directions 
+
+### Implementation
+
+The algorithm that was chosen includes using sub modules:
+
+1. Construct interpolated waypoints of nearby area  using Frenet co-ordinate system and spline interpolation
+2. Determine ego car parameters and construct vehicle object
+3. Generate predictions of each vehicles and determining the next possible states of the ego vehicle
+4. Calculating the cost of each potential next state and selecting the state with the lowest cost
+5. Creating and using the trajectory of the lowest state so that the ego vehicle proceeds in the allocated direction and speed
+
+
+#### Construct interpolated waypoints of nearby area  using Frenet co-ordinate system and spline interpolation
+
+The Spline.h API was used as directed in the recommendations at the start of the project. This made it easy to create a projected path of the ego vehicle. Likewise the points on how to move the ego vehicle in the walk-through were followed to get the project started.
+
+#### Utilizing the sensor fusion data to determine nearby vehicles and their predicted n+i locations.
+
+A class called Vehicle was created to be able to create vehicle objects of all vehicles in the far 3 right lanes including the ego vehicle. This class was created to handle the kinematics of each vehicle, predicted locations, FSM for the path planner and generation of trajectories. 
+
+The implementation used is similar to previous lessons however it includes required updates to handle latency and prevention of extreme accelerations and jerks.
+
+#### Generate predictions of each vehicles and determining the next possible states of the ego vehicle
+
+Now that each vehicle has been encapsulated in an object, predictions can be made on where they will be over time using their current location, speed and acceleration. 
+
+When the next locations are known it is easy to determine what are the next possible states of the ego vehicle are. These can either be "Keep Lane", "Prepare Lane Change Left", "Prepare Lane Change Right", "Lane Change Left" and "Lane Change Right".
+
+#### Calculating the cost of each potential next state and selecting the state with the lowest cost
+
+Once the potential next states are known, a cost of each movement needs to be calculated. To do this the following three cost functions were implemented:
+
+1. Inefficiency Cost -  Cost becomes higher for trajectories with intended lane and final lane that have traffic slower than vehicle's target speed. 
+2. Goal Distance Cost -  Cost increases based on distance of intended lane (for planning a lane change) and final lane of trajectory. Cost of being out of goal lane (middle lane) also becomes larger as vehicle approaches goal distance.
+3. Lane Change Cost -  Cost increases when the ego vehicle wants to change lanes.
+
+Finally the next potential state with the lowest cost is chosen.
+
+#### Creating and using the trajectory of the lowest state so that the ego vehicle proceeds in the allocated direction and speed
+
+The final step utilizes step one, in that the trajectory (lane location and speed) are assigned to the ego vehicle so that it moves in the correction speed and direction as calculated.
+
+### Conclusion
+
+The overall implementation certainly meets the criteria. However this is an area where one can spend a lot of time tweaking the algorithm to improve the system. This implementation uses the major blocks that were discussed in the previous lessons so it was a huge help in understanding the lessons further.
+
+Some potential improvements to the the current design would be:
+
+- To include d, d_dot and dd_dot in the vehicle class so that the lateral acceleration and jerk can be calculated with higher accuracy.
+- Tweak the cost functions further to give a better path planner. However this is not so easy for my setup as I am using Docker environment so I need to continually commit my updates into git and pull and rebuild on docker each time I need to test something. This is a major inconvenience when using windows 7 machines as it  slows down development and test processes.
+- Add more cost functions to further tweak the path planning decision making process.
+
+Overall though I was able to get over 8 miles incident free driving which meets the requirements.
+
+
+
 # CarND-Path-Planning-Project
-Self-Driving Car Engineer Nanodegree Program
-   
+## Self-Driving Car Engineer Nanodegree Program
+  
 ### Simulator.
 You can download the Term3 Simulator which contains the Path Planning Project from the [releases tab (https://github.com/udacity/self-driving-car-sim/releases).
 
