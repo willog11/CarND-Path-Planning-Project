@@ -243,7 +243,7 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
 		{
 			//If lane change is not possible, return empty trajectory.
 			//std::cout << "[VEH] Vehicle found in next lane - aborting lane change" << endl;
-			if(next_vehicle.lane == this->lane && next_vehicle.s > this->s * this->preferred_buffer * 2)
+			if(next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer * 2)
 				std::cout << "[VEH] Vehicle not found in current lane - aborting lane change" << endl;
 			return trajectory;
 		}
