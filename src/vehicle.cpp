@@ -55,7 +55,6 @@ vector<Vehicle> Vehicle::choose_next_state(map<int, vector<Vehicle>> predictions
 			//std::cout << "[VEH] State: " << *it << "cost: " << cost << endl;
         }
     }
-
     vector<float>::iterator best_cost = min_element(begin(costs), end(costs));
     int best_idx = distance(begin(costs), best_cost);
     return final_trajectories[best_idx];
@@ -253,6 +252,7 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
     int new_lane = this->lane + lane_direction[state];
     vector<Vehicle> trajectory;
     Vehicle next_vehicle;
+
 	//Check if lane change happened recently
 	if (this->lane_change_dist <= this->s + 20)
 	{
@@ -272,7 +272,7 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
 			return trajectory;
 		}
     }
-	this->lane_change_dist = this->s;
+
     trajectory.push_back(Vehicle(this->lane, this->s, this->v, this->a, this->state));
     vector<float> kinematics = get_kinematics(predictions, new_lane);
     trajectory.push_back(Vehicle(new_lane, kinematics[0], kinematics[1], kinematics[2], state));
@@ -358,6 +358,11 @@ void Vehicle::realize_next_state(vector<Vehicle> trajectory) {
     this->s = next_state.s;
     this->v = next_state.v;
     this->a = next_state.a;
+
+	if (this->state.compare("LCL") == 0 || this->state.compare("LCR") == 0)
+	{
+		this->lane_change_dist = this->s;
+	}
 }
 
 void Vehicle::configure(vector<float> road_data) {
