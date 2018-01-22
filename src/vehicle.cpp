@@ -197,18 +197,31 @@ vector<Vehicle> Vehicle::prep_lane_change_trajectory(string state, map<int, vect
     float new_s;
     float new_v;
     float new_a;
-    Vehicle vehicle_behind;
+    Vehicle next_vehicle;
     int new_lane = this->lane + lane_direction[state];
     vector<Vehicle> trajectory = {Vehicle(this->lane, this->s, this->v, this->a, this->state)};
     vector<float> curr_lane_new_kinematics = get_kinematics(predictions, this->lane);
+	for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
+		next_vehicle = it->second[0];
+		if (next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer * 2)
+		{
+			new_s = curr_lane_new_kinematics[0];
+			new_v = curr_lane_new_kinematics[1];
+			new_a = curr_lane_new_kinematics[2];
+			std::cout << "[VEH] Vehicle not found in current lane - maintaining current kinematics" << endl;
+			trajectory.push_back(Vehicle(this->lane, new_s, new_v, new_a, state));
+			return trajectory;
 
-    if (get_vehicle_behind(predictions, this->lane, vehicle_behind)) {
+		}
+	}
+    if (get_vehicle_behind(predictions, this->lane, next_vehicle)) {
         //Keep speed of current lane so as not to collide with car behind.
         new_s = curr_lane_new_kinematics[0];
         new_v = curr_lane_new_kinematics[1];
         new_a = curr_lane_new_kinematics[2];
         
-    } else {
+    }
+	else {
         vector<float> best_kinematics;
         vector<float> next_lane_new_kinematics = get_kinematics(predictions, new_lane);
         //Choose kinematics with lowest velocity.
@@ -238,13 +251,10 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
         next_vehicle = it->second[0];
 		int max_gap = this->preferred_buffer;
 		float dist_between_veh = abs(this->s - (next_vehicle.s + next_vehicle.v * 0.02));
-		if (dist_between_veh <= max_gap && next_vehicle.lane == new_lane ||
-			next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer * 2)
+		if (dist_between_veh <= max_gap && next_vehicle.lane == new_lane)
 		{
 			//If lane change is not possible, return empty trajectory.
 			//std::cout << "[VEH] Vehicle found in next lane - aborting lane change" << endl;
-			if(next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer * 2)
-				std::cout << "[VEH] Vehicle not found in current lane - aborting lane change" << endl;
 			return trajectory;
 		}
     }
