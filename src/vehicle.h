@@ -44,6 +44,8 @@ public:
 
   string state;
 
+  float lane_change_dist;
+
   /**
   * Constructor
   */

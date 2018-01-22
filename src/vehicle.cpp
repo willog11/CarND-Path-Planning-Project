@@ -21,6 +21,7 @@ Vehicle::Vehicle(int lane, float s, float v, float a, string state) {
     this->a = a;
     this->state = state;
     max_acceleration = -1;
+	this->lane_change_dist = 0;
 
 }
 
@@ -252,6 +253,13 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
     int new_lane = this->lane + lane_direction[state];
     vector<Vehicle> trajectory;
     Vehicle next_vehicle;
+	//Check if lane change happened recently
+	if (this->lane_change_dist <= this->s + 20)
+	{
+		std::cout << "[VEH] Lane change happened recently - aborting lane change" << endl;
+		return trajectory;
+	}
+
     //Check if a lane change is possible (check if another vehicle occupies that spot).
     for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
         next_vehicle = it->second[0];
@@ -264,6 +272,7 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
 			return trajectory;
 		}
     }
+	this->lane_change_dist = this->s;
     trajectory.push_back(Vehicle(this->lane, this->s, this->v, this->a, this->state));
     vector<float> kinematics = get_kinematics(predictions, new_lane);
     trajectory.push_back(Vehicle(new_lane, kinematics[0], kinematics[1], kinematics[2], state));
