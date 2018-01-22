@@ -269,7 +269,7 @@ int main() {
 			double ref_x = car_x;
 			double ref_y = car_y;
 			double ref_yaw = deg2rad(car_yaw);
-			std::cout << " s = 0" << endl;
+			std::cout << " s= " << car_s << endl;
 			if (car_s == 1)
 			{
 				std::cout << " s = 0" << endl;
