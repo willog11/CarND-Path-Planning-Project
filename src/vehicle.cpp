@@ -254,7 +254,7 @@ vector<Vehicle> Vehicle::lane_change_trajectory(string state, map<int, vector<Ve
     Vehicle next_vehicle;
 
 	//Check if lane change happened recently
-	if ((this->lane_change_dist + 20) > this->s)
+	if ((this->lane_change_dist + 30) > this->s)
 	{
 		std::cout << "[VEH] Lane change happened recently: " << this->s<< " - aborting lane change" << endl;
 		return trajectory;
