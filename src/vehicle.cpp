@@ -361,6 +361,7 @@ void Vehicle::realize_next_state(vector<Vehicle> trajectory) {
 
 	if (this->state.compare("LCL") == 0 || this->state.compare("LCR") == 0)
 	{
+		std::cout << "Lane change recorded, s: " << this->s << std::endl;
 		this->lane_change_dist = this->s;
 	}
 }
