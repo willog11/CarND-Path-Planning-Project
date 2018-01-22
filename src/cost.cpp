@@ -5,8 +5,8 @@
 #include <map>
 #include <math.h>
 
-const float REACH_GOAL = pow(10, 7);
-const float EFFICIENCY = pow(10, 6);
+const float REACH_GOAL = pow(10, 5);
+const float EFFICIENCY = pow(10, 5);
 const float COMFORT = pow(10, 2);
 
 float lane_change_cost(const Vehicle & vehicle, const vector<Vehicle> & trajectory, const map<int, vector<Vehicle>> & predictions, map<string, float> & data) {
