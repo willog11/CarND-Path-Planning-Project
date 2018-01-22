@@ -205,14 +205,14 @@ vector<Vehicle> Vehicle::prep_lane_change_trajectory(string state, map<int, vect
 	bool veh_found_in_front = false;
 	for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
 		next_vehicle = it->second[0];
-		if (next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer + 10)
+		if (next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer *2)
 		{
 			//if (this->v < this->target_speed - 2)
 			//{
 				new_s = curr_lane_new_kinematics[0];
 				new_v = curr_lane_new_kinematics[1];
 				new_a = curr_lane_new_kinematics[2];
-				std::cout << "[VEH] Vehicle not found in current lane - maintaining current kinematics" << endl;
+				//std::cout << "[VEH] Vehicle not found in current lane - maintaining current kinematics" << endl;
 				trajectory.push_back(Vehicle(this->lane, new_s, new_v, new_a, "KL"));
 				return trajectory;
 			//}
