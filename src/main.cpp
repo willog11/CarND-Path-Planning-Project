@@ -269,10 +269,9 @@ int main() {
 			double ref_x = car_x;
 			double ref_y = car_y;
 			double ref_yaw = deg2rad(car_yaw);
-			std::cout << " s= " << car_s << endl;
-			if (car_s == 1)
+
+			if (car_s == 0)
 			{
-				std::cout << " s = 0" << endl;
 				my_veh.lane_change_dist = 0;
 			}
 

@@ -184,7 +184,6 @@ vector<Vehicle> Vehicle::prep_lane_change_trajectory(string state, map<int, vect
     vector<Vehicle> trajectory = {Vehicle(this->lane, this->s, this->v, this->a, this->state)};
     vector<float> curr_lane_new_kinematics = get_kinematics(predictions, this->lane);
 
-	//bool veh_found_in_front = false;
 	for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
 		next_vehicle = it->second[0];
 		if (next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer * 3)
