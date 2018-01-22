@@ -203,7 +203,7 @@ vector<Vehicle> Vehicle::prep_lane_change_trajectory(string state, map<int, vect
     vector<float> curr_lane_new_kinematics = get_kinematics(predictions, this->lane);
 
 	//bool veh_found_in_front = false;
-	/*for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
+	for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
 		next_vehicle = it->second[0];
 		//if (next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer *2)
 		if (next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer)
@@ -219,8 +219,8 @@ vector<Vehicle> Vehicle::prep_lane_change_trajectory(string state, map<int, vect
 			//}
 
 		}
-	}*/
-    if (get_vehicle_behind(predictions, this->lane, next_vehicle) || get_vehicle_ahead(predictions, this->lane, next_vehicle)) {
+	}
+    if (get_vehicle_behind(predictions, this->lane, next_vehicle)) {
         //Keep speed of current lane so as not to collide with car behind.
         new_s = curr_lane_new_kinematics[0];
         new_v = curr_lane_new_kinematics[1];
