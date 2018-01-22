@@ -270,6 +270,11 @@ int main() {
 			double ref_y = car_y;
 			double ref_yaw = deg2rad(car_yaw);
 
+			if (car_s == 0)
+			{
+				my_veh.lane_change_dist = 0;
+			}
+
 			if (prev_size > 0)
 			{
 				ref_x = previous_path_x[prev_size - 1];
@@ -284,11 +289,6 @@ int main() {
 			my_veh.s = car_s;
 			my_veh.v = car_speed;
 			my_veh.goal_s = car_s + 30;
-
-			if (car_s == 0)
-			{
-				my_veh.lane_change_dist = 0;
-			}
 			
 			map<int, Vehicle> vehicles;
 			map<int, vector<Vehicle>> predictions;
