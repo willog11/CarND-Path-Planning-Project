@@ -272,6 +272,7 @@ int main() {
 
 			if (car_s == 0)
 			{
+				std::cout << " s = 0" << endl;
 				my_veh.lane_change_dist = 0;
 			}
 
