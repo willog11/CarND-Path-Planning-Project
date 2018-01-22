@@ -285,10 +285,10 @@ int main() {
 			my_veh.v = car_speed;
 			my_veh.goal_s = car_s + 30;
 
-			//bool too_close = false;
-			//vector<Vehicle> cars;
-			//cout << "[Ego Veh] Current s position: " << car_s << endl;
-			//cout << "[Ego Veh] Current d position: " << lane << endl;
+			if (car_s == 0)
+			{
+				my_veh.lane_change_dist = 0;
+			}
 			
 			map<int, Vehicle> vehicles;
 			map<int, vector<Vehicle>> predictions;
@@ -296,7 +296,6 @@ int main() {
 			for (int i = 0;i < sensor_fusion.size(); i++)
 			{
 				// Only look at cars in the ego vehicles lane
-				//double d = sensor_fusion[i][6];
 				double vx = sensor_fusion[i][3];
 				double vy = sensor_fusion[i][4];
 				double veh_speed = sqrt(vx*vx + vy*vy);
@@ -310,33 +309,9 @@ int main() {
 
 				if (veh_lane >= 0)
 				{
-					//cout << "[Other Veh] lane: " << veh_lane << endl;
-					//cout << "[Other Veh] speed: " << veh_speed << endl;
-					//cout << "[Other Veh] S position: " << veh_s << endl;
 					Vehicle other_veh(veh_lane, veh_s, veh_speed, 0);
 					vehicles.insert(std::pair<int, Vehicle>(v_id, other_veh));
 				}
-				
-
-
-				/*if (d<center_next_lane + 2 && d> center_next_lane - 2)
-				{
-					double vx = sensor_fusion[i][3];
-					double vy = sensor_fusion[i][4];
-					double check_speed = sqrt(vx*vx + vy*vy);
-					double check_car_s = sensor_fusion[i][5];
-					int d = sensor_fusion[i][6] / 4;
-
-					// Increment sensor vehicle distance according to its current (calculated) speed * latency (20ms)
-					check_car_s += (double)prev_size * 0.02 * check_speed;
-					
-					
-					// Check if the vehice is in front and is closer than 30m
-					if ((check_car_s > car_s) && (check_car_s - car_s) < 30)
-					{
-						too_close = true;
-					}
-				}*/
 			}
 
 			map<int, Vehicle>::iterator it = vehicles.begin();
@@ -348,29 +323,10 @@ int main() {
 			}
 
 			vector<Vehicle> trajectory = my_veh.choose_next_state(predictions);
-			//cout << "[Ego Veh] Next trajectory size: " << trajectory.size() << endl;
-			//cout << "[Ego Veh] Next s position: " << trajectory[0].s << endl;
-			//cout << "[Ego Veh] Next d position: " << trajectory[0].lane << endl;
-
 			my_veh.realize_next_state(trajectory);
 
 			ref_vel = my_veh.v;
 			lane	= my_veh.lane;
-
-			//cout << "[EGO Veh] Lane requested: " << lane << endl;
-			//cout << "[EGO Veh] Velocity requested: " << ref_vel << endl;
-			//cout << "[Ego Veh] State requested: " << my_veh.state << "\n" << endl;
-
-
-			/*if (too_close)
-			{
-				ref_vel -= 0.224;
-			}
-			else if (ref_vel < 49.5)
-			{
-				ref_vel += 0.224;
-			}*/
-
 
 			// Define the actual (x,y) points we will use for the planner
           	vector<double> next_x_vals;
