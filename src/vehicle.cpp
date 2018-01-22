@@ -205,7 +205,8 @@ vector<Vehicle> Vehicle::prep_lane_change_trajectory(string state, map<int, vect
 	bool veh_found_in_front = false;
 	for (map<int, vector<Vehicle>>::iterator it = predictions.begin(); it != predictions.end(); ++it) {
 		next_vehicle = it->second[0];
-		if (next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer *2)
+		//if (next_vehicle.lane == this->lane && next_vehicle.s > this->s + this->preferred_buffer *2)
+		if (this->a >= this->max_acceleration - 0.5)
 		{
 			//if (this->v < this->target_speed - 2)
 			//{
