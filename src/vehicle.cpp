@@ -211,7 +211,7 @@ vector<Vehicle> Vehicle::prep_lane_change_trajectory(string state, map<int, vect
 				new_v = curr_lane_new_kinematics[1];
 				new_a = curr_lane_new_kinematics[2];
 				std::cout << "[VEH] Vehicle not found in current lane - maintaining current kinematics" << endl;
-				trajectory.push_back(Vehicle(this->lane, new_s, new_v, new_a, state));
+				//trajectory.push_back(Vehicle(this->lane, new_s, new_v, new_a, state));
 				return trajectory;
 			}
 
